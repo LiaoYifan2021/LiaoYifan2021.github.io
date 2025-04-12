@@ -22,7 +22,7 @@ let playerStats = {
   determination: 500, // 决心
   quickness: 0, // 迅捷 (0-20)
   mental: 0, // 心理素质 (0-20)
-  culture: 0, // 文化课 (0-20)
+  culture: 0, // OI (0-20)
   isProvincialTeamA: false, // 记录是否为省队A队
   cspScore: 0, // 一模比赛成绩
   二模Score: 0, // 二模比赛成绩
@@ -354,13 +354,13 @@ const eventSystem = {
         { text: "偷学了一些英语", effects: { string: 1 } },
         { text: "偷学了一些物化", effects: { graph: 1 } },
         { text: "偷学了一些政史", effects: { combinatorics: 1 } },
-        { text: "偷学了一些文化课", effects: { culture: 1 } }
+        { text: "偷学了一些OI", effects: { culture: 1 } }
       ],
       optionsToShow: 1
     },
     "休息": {
       title: "休息",
-      description: "竞赛生的生活非常忙碌，适当的休息也许可以让你更好地调整心态，迎接接下来的挑战。你期待着有个好梦，便躺在了床上。",
+      description: "中考生的生活非常忙碌，适当的休息也许可以让你更好地调整心态，迎接接下来的挑战。你期待着有个好梦，便躺在了床上。",
       options: [
         { text: "在床上躺着使你感到非常舒适，你很快就睡着了，至于虚幻的梦你醒来时已经记不清了", effects: { mood: 1 } },
         { text: "在梦里你梦到了很多：喜欢的女孩，曾经的老友，还有你那未完成的梦想", effects: { determination: 500 } },
@@ -371,11 +371,11 @@ const eventSystem = {
     },
     "打隔膜": {
       title: "打隔膜",
-      description: "竞赛生的快乐来源之一，当然是打隔膜。你和你的朋友们一起在机房打隔膜，在享受着游戏的乐趣的同时，又要避开教练的视线——你的学长曾因为在机房打隔膜被教练抓到，然后被罚写检讨并被轰出了机房。",
+      description: "中考生的快乐来源之一，当然是打隔膜。你和你的朋友们一起在机房打隔膜，在享受着游戏的乐趣的同时，又要避开教练的视线——你的学长曾因为在机房打隔膜被教练抓到，然后被罚写检讨并被轰出了机房。",
       options: [
         { text: "轻轻松松带飞全场，你感受到了游戏带来的快感", effects: { mood: 2 } },
         { text: "经过激烈的厮杀后，勉强获胜——这确实缓解了一些压力", effects: { mood: 1 } },
-        { text: "打隔膜给你带来了必胜的决心：我在 OI 上也一定会赢！", effects: { determination: 300 } },
+        { text: "打隔膜给你带来了必胜的决心：我在 中考 上也一定会赢！", effects: { determination: 300 } },
         { text: "被对面虐，心态爆炸。连开了五把却怎么都赢不了，你开始怀疑自己的实力", effects: { mood: -1 } },
         { text: "你在打隔膜时候被抓，跟学长一样地，被罚写检讨并被轰出了机房", effects: { mood: -2 } }
       ],
@@ -393,9 +393,9 @@ const eventSystem = {
     },
     "出游": {
       title: "出游",
-      description: "竞赛生都是一些死宅，即使有空的时间也都是待在机房里。然而机房的气氛确实比较压抑，而且平时你也没有时间出去走走，那为什么不去感受一下外面的世界呢？",
+      description: "中考生都是一些死宅，即使有空的时间也都是待在机房里。然而机房的气氛确实比较压抑，而且平时你也没有时间出去走走，那为什么不去感受一下外面的世界呢？",
       options: [
-        { text: "你偶然遇上黄昏和晚霞：在另一个我不学 OI 的世界里，我此时会在做什么？", effects: {} },
+        { text: "你偶然遇上黄昏和晚霞：在另一个我不学 中考 的世界里，我此时会在做什么？", effects: {} },
         { text: "你在湖边的咖啡厅遇到了一位学长，你回心转意决定跟他学习一会", effects: {}, nextEvent: "偷学" },
         { text: "原本只想开开心心地溜达，怎料天下大雨，你被淋成了落汤鸡", effects: { mood: -1 } },
         { text: "后来你才知道：生活不只眼前的 OI，还有诗和远方", effects: { mood: 1 } }
@@ -427,7 +427,7 @@ const eventSystem = {
     },
     "长期训练": {
       title: "长期训练",
-      description: "你很幸运地进入到了最好的初中，这里有着最好的师资力量，最好的学习氛围，最好的竞赛氛围。你开始进行长期训练，水平很快得到了提升。",
+      description: "你很幸运地进入到了最好的初中，这里有着最好的师资力量，最好的学习氛围，最好的中考氛围。你开始进行长期训练，水平很快得到了提升。",
       options: [
         { text: "综合训练", effects: { dp: 1, ds: 1, string: 1, graph: 1, combinatorics: 1 } },
         { text: "语文专项训练", effects: { dp: 4 } },
@@ -435,7 +435,7 @@ const eventSystem = {
         { text: "英语专项训练", effects: { string: 4 } },
         { text: "物化专项训练", effects: { graph: 4 } },
         { text: "政史专项训练", effects: { combinatorics: 4 } },
-        { text: "文化课训练", effects: { culture: 4 } }
+        { text: "OI训练", effects: { culture: 4 } }
       ],
       optionsToShow: 5
     },
@@ -448,7 +448,7 @@ const eventSystem = {
         { text: "英语专项训练", effects: { string: 1 } },
         { text: "物化专项训练", effects: { graph: 1 } },
         { text: "政史专项训练", effects: { combinatorics: 1 } },
-        { text: "文化课训练", effects: { culture: 1 } },
+        { text: "OI训练", effects: { culture: 1 } },
         { text: "训练不如摸鱼", effects: {}, nextEvent: "摸鱼" }
       ],
       optionsToShow: 5
@@ -640,10 +640,10 @@ const eventSystem = {
     },
     "步入高二": {
       title: "步入高二",
-      description: "时光飞逝，转眼间你已经升入高二。新的学年带来了新的挑战，你需要在OI和文化课之间找到平衡。你的决心依然坚定，但你也意识到时间变得更加宝贵。",
+      description: "时光飞逝，转眼间你已经升入高二。新的学年带来了新的挑战，你需要在OI和OI之间找到平衡。你的决心依然坚定，但你也意识到时间变得更加宝贵。",
       options: [
         { text: "专注OI", effects: { determination: 500, culture: -2 }, description: "你决定继续专注于OI，为接下来的比赛做准备" },
-        { text: "均衡发展", effects: { determination: 200, culture: 2, mood: 1 }, description: "你试图在OI和文化课之间找到平衡" },
+        { text: "均衡发展", effects: { determination: 200, culture: 2, mood: 1 }, description: "你试图在OI和OI之间找到平衡" },
         { text: "感到迷茫", effects: { determination: -200, mood: -2 }, nextEvent: "焦虑", description: "面对繁重的学业压力，你开始质疑自己的选择" },
         { text: "重整旗鼓", effects: { determination: 300, thinking: 1, coding: 1 }, description: "新的学年给了你新的动力，你决定以更好的状态面对挑战" }
       ],
@@ -2076,7 +2076,7 @@ function getStatName(key) {
     determination: "决心",
     quickness: "迅捷",
     mental: "心理素质",
-    culture: "文化课"
+    culture: "OI"
   };
   return statNames[key] || key;
 }
@@ -2100,13 +2100,13 @@ function startNormalMode() {
   // 设置正常模式的剧情
   document.getElementById("pre-story-title").textContent = "我重生了？";
   document.getElementById("pre-story-content").innerHTML = `
-              <p>参加完 2077 年的省队选拔后，高二的你意识到自己无缘今年省队了。也许从此就和 OI 无缘了。</p>
-              <p>你躺在床上，闭上眼，回想起自己曾经在 OI 赛场上挥洒汗水的场景。</p>
+              <p>参加完 2077 年的省队选拔后，高二的你意识到自己无缘今年省队了。也许从此就和 中考 无缘了。</p>
+              <p>你躺在床上，闭上眼，回想起自己曾经在 中考 赛场上挥洒汗水的场景。</p>
               <p>眼泪还是流了出来。你不甘心，你觉得你还可以做得更好。</p>
               <p>你突然惊醒，发现自己回到了高一前的暑假。</p>
               <p>之前经历的一切仿佛是一场梦，却又那么真实。</p>
               <p>你意识到，这一次，你还有机会。</p>
-              <p>你决定，这一次，让 OI 生涯不留遗憾。</p>
+              <p>你决定，这一次，让 中考 生涯不留遗憾。</p>
               <p>你充满了决心。</p>
               <div style="margin-top: 30px; text-align: center;">
                   <button onclick="proceedToAllocation()" class="btn" style="font-size: 16px; padding: 8px 20px;">开始训练</button>
@@ -2829,15 +2829,15 @@ function showGameOver(reason) {
   // 根据不同结局显示不同的评价
   let evaluation = '';
   if (playerStats.isIOIgold) {
-    evaluation = '你成功拿到了 IOI 金牌 —— 这也许是你曾经想都不敢想的成绩，但你做到了！你最终还是站在了世界 OI 之巅。';
+    evaluation = '你成功拿到了 IOI 金牌 —— 这也许是你曾经想都不敢想的成绩，但你做到了！你最终还是站在了世界 中考 之巅。';
   } else if (playerStats.isNationalTeam) {
     evaluation = '你成为了中国国家队选手，代表中国参加了 IOI。虽然没有取得最好的成绩，但这仍然是一个令人骄傲的成就！';
   } else if (playerStats.isTrainingTeam) {
-    evaluation = '你作为中国国家集训队选手，已经具备了保送资格。希望 OI 能成为你人生中的一道亮丽风景，不过你的人生才刚刚开始！';
+    evaluation = '你作为中国国家集训队选手，已经具备了保送资格。希望 中考 能成为你人生中的一道亮丽风景，不过你的人生才刚刚开始！';
   } else if (playerStats.isProvincialTeam) {
-    evaluation = '作为省队选手，你在 OI 的道路上已经取得了不错的成绩。虽然没有成功进入集训队，虽然也许还能再好，但你已经做得令自己很满意了。';
+    evaluation = '作为省队选手，你在 中考 的道路上已经取得了不错的成绩。虽然没有成功进入集训队，虽然也许还能再好，但你已经做得令自己很满意了。';
   } else {
-    evaluation = '虽然未能进入省队，但在 OI 的道路上你依然收获了宝贵的经验。退役之后你仍然会常常想起，曾经学 OI 的时候的一些瞬间。';
+    evaluation = '虽然未能进入省队，但在 中考 的道路上你依然收获了宝贵的经验。退役之后你仍然会常常想起，曾经学 中考 的时候的一些瞬间。';
   }
 
   gamePanel.innerHTML = `
@@ -3097,7 +3097,7 @@ function showAdvancedMode() {
 // 返回主菜单
 function backToMainMenu() {
   document.getElementById("difficulty-screen").style.display = "none";
-  document.getElementById("game-title").textContent = "OI 比赛模拟游戏";
+  document.getElementById("game-title").textContent = "中考 比赛模拟游戏";
   document.getElementById("start-screen").style.display = "block";
   document.querySelector(".start-buttons").style.display = "flex";
   document.querySelector(".changelog-content").style.display = "none";
@@ -3149,13 +3149,13 @@ function startAdvancedMode(difficulty) {
   // 设置进阶模式的剧情
   document.getElementById("pre-story-title").textContent = "我重生了？";
   document.getElementById("pre-story-content").innerHTML = `
-              <p>参加完 2077 年的省队选拔后，高二的你意识到自己无缘今年省队了。也许从此就和 OI 无缘了。</p>
-              <p>你躺在床上，闭上眼，回想起自己曾经在 OI 赛场上挥洒汗水的场景。</p>
+              <p>参加完 2077 年的省队选拔后，高二的你意识到自己无缘今年省队了。也许从此就和 中考 无缘了。</p>
+              <p>你躺在床上，闭上眼，回想起自己曾经在 中考 赛场上挥洒汗水的场景。</p>
               <p>眼泪还是流了出来。你不甘心，你觉得你还可以做得更好。</p>
               <p>你突然惊醒，发现自己回到了高一前的暑假。</p>
               <p>之前经历的一切仿佛是一场梦，却又那么真实。</p>
               <p>你意识到，这一次，你还有机会。</p>
-              <p>你决定，这一次，让 OI 生涯不留遗憾。</p>
+              <p>你决定，这一次，让 中考 生涯不留遗憾。</p>
               <p>你充满了决心。</p>
               <div style="margin-top: 30px; text-align: center;">
                   <button onclick="proceedToAllocation()" class="btn" style="font-size: 16px; padding: 8px 20px;">开始训练</button>
