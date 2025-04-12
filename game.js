@@ -7,26 +7,26 @@ let mood = 10; // 当前心态
 let currentProblem = 1; // 当前题目
 let totalProblems = 0; // 总题目数
 let remainingPoints = 15; // 剩余天赋点改为15点
-let currentContestName = "NOIP普及组"; // 当前比赛名称
+let currentContestName = "二模普及组"; // 当前比赛名称
 
 // 角色数值
 let playerStats = {
-  dp: 0, // 动态规划 (0-20)
-  ds: 0, // 数据结构 (0-20)
-  string: 0, // 字符串 (0-20)
-  graph: 0, // 图论 (0-20)
-  combinatorics: 0, // 组合计数 (0-20)
+  dp: 0, // 语文 (0-20)
+  ds: 0, // 数学 (0-20)
+  string: 0, // 英语 (0-20)
+  graph: 0, // 物化 (0-20)
+  combinatorics: 0, // 政史 (0-20)
   thinking: 0, // 思维 (0-20)
-  coding: 0, // 代码 (0-20)
+  coding: 0, // 过程 (0-20)
   carefulness: 0, // 细心 (0-20)
   determination: 500, // 决心
   quickness: 0, // 迅捷 (0-20)
   mental: 0, // 心理素质 (0-20)
   culture: 0, // 文化课 (0-20)
   isProvincialTeamA: false, // 记录是否为省队A队
-  cspScore: 0, // CSP-S比赛成绩
-  noipScore: 0, // NOIP比赛成绩
-  prevScore: 0, // 省选Day1成绩
+  cspScore: 0, // 一模比赛成绩
+  二模Score: 0, // 二模比赛成绩
+  prevScore: 0, // 三模Day1成绩
   isProvincialTeam: false, // 记录是否进入省队
   prevScore1: 0, // CTT Day1成绩
   prevScore2: 0, // CTT Day2成绩
@@ -42,8 +42,8 @@ let playerStats = {
 
 // 比赛配置
 const contestConfigs = {
-  1: { // CSP-S
-    name: "CSP-S",
+  1: { // 一模
+    name: "一模",
     problemRanges: [
       { minLevel: 2, maxLevel: 3 },
       { minLevel: 3, maxLevel: 4 },
@@ -52,8 +52,8 @@ const contestConfigs = {
     ],
     timePoints: 21
   },
-  2: { // NOIP
-    name: "NOIP",
+  2: { // 二模
+    name: "二模",
     problemRanges: [
       { minLevel: 3, maxLevel: 4 },
       { minLevel: 3, maxLevel: 4 },
@@ -71,8 +71,8 @@ const contestConfigs = {
     ],
     timePoints: 30
   },
-  4: { // 省选Day1
-    name: "省选Day1",
+  4: { // 三模Day1
+    name: "三模Day1",
     problemRanges: [
       { minLevel: 4, maxLevel: 5 },
       { minLevel: 6, maxLevel: 7 },
@@ -80,8 +80,8 @@ const contestConfigs = {
     ],
     timePoints: 27
   },
-  5: { // 省选Day2
-    name: "省选Day2",
+  5: { // 三模Day2
+    name: "三模Day2",
     problemRanges: [
       { minLevel: 5, maxLevel: 6 },
       { minLevel: 6, maxLevel: 7 },
@@ -99,8 +99,8 @@ const contestConfigs = {
     timePoints: 30,
     isIOI: true
   },
-  7: { // NOI Day1
-    name: "NOI Day1",
+  7: { // 中考 Day1
+    name: "中考 Day1",
     problemRanges: [
       { minLevel: 5, maxLevel: 7 },
       { minLevel: 7, maxLevel: 8 },
@@ -108,8 +108,8 @@ const contestConfigs = {
     ],
     timePoints: 30
   },
-  8: { // NOI Day2
-    name: "NOI Day2",
+  8: { // 中考 Day2
+    name: "中考 Day2",
     problemRanges: [
       { minLevel: 7, maxLevel: 7 },
       { minLevel: 8, maxLevel: 9 },
@@ -219,18 +219,18 @@ function selectProblemFromRange(minLevel, maxLevel) {
   return availableProblems[Math.floor(Math.random() * availableProblems.length)];
 }
 
-// 修改 startNOIPTest 函数，添加商店价格初始化
-function startNOIPTest() {
+// 修改 start二模Test 函数，添加商店价格初始化
+function start二模Test() {
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("pre-story-panel").style.display = "block";
   document.getElementById("log-panel").style.display = "none";
 
   // 设置测试模式的剧情
-  document.getElementById("pre-story-title").textContent = "NOIP测试模式";
+  document.getElementById("pre-story-title").textContent = "二模测试模式";
   document.getElementById("pre-story-content").innerHTML = `
-              <p>欢迎进入NOIP测试模式！</p>
+              <p>欢迎进入二模测试模式！</p>
               <p>这是一个简化的测试版本，你可以快速体验游戏的核心玩法。</p>
-              <p>你将直接进入NOIP普及组比赛，体验完整的比赛流程。</p>
+              <p>你将直接进入二模普及组比赛，体验完整的比赛流程。</p>
               <p>现在，你需要分配你的天赋点，为比赛做好准备。</p>
           `;
 
@@ -240,7 +240,7 @@ function startNOIPTest() {
   currentProblem = 1;
   totalProblems = 0;
   remainingPoints = 15;
-  currentContestName = "NOIP普及组";
+  currentContestName = "二模普及组";
 
   // 重置玩家属性
   playerStats = {
@@ -259,7 +259,7 @@ function startNOIPTest() {
   // 重置商店价格
   currentShopPrices = {
     "思维提升": 300,
-    "代码提升": 300,
+    "过程提升": 300,
     "细心提升": 300,
     "随机提升": 300,
     "心态恢复": 500,
@@ -276,9 +276,9 @@ function startNOIPTest() {
 let problems = []; // 当前比赛的题目
 let subProblems = []; // 每个题目的部分分
 let thinkProgress = []; // 每个部分分的思考进度
-let codeProgress = []; // 每个部分分的代码进度
-let isCodeComplete = []; // 每个部分分的代码是否完成
-let errorRates = []; // 存储每个部分分的固定对拍失败概率
+let codeProgress = []; // 每个部分分的过程进度
+let isCodeComplete = []; // 每个部分分的过程是否完成
+let errorRates = []; // 存储每个部分分的固定检查失败概率
 
 // 游戏日志
 let gameLog = [];
@@ -287,7 +287,7 @@ let gameLog = [];
 const shopPriceIncrements = {
   easy: {
     "思维提升": 200,
-    "代码提升": 200,
+    "过程提升": 200,
     "细心提升": 200,
     "随机提升": 0,
     "心态恢复": 0,
@@ -297,7 +297,7 @@ const shopPriceIncrements = {
   },
   normal: {
     "思维提升": 300,
-    "代码提升": 300,
+    "过程提升": 300,
     "细心提升": 300,
     "随机提升": 200,
     "心态恢复": 200,
@@ -307,7 +307,7 @@ const shopPriceIncrements = {
   },
   hard: {
     "思维提升": 500,
-    "代码提升": 500,
+    "过程提升": 500,
     "细心提升": 500,
     "随机提升": 200,
     "心态恢复": 200,
@@ -317,7 +317,7 @@ const shopPriceIncrements = {
   },
   expert: {
     "思维提升": 1000,
-    "代码提升": 1000,
+    "过程提升": 1000,
     "细心提升": 1000,
     "随机提升": 500,
     "心态恢复": 500,
@@ -330,7 +330,7 @@ const shopPriceIncrements = {
 // 添加商品当前价格记录
 let currentShopPrices = {
   "思维提升": 500,
-  "代码提升": 500,
+  "过程提升": 500,
   "细心提升": 500,
   "随机提升": 500,
   "心态恢复": 500,
@@ -349,11 +349,11 @@ const eventSystem = {
       options: [
         { text: "偷学被同学发现，被迫中断学习", effects: {} },
         { text: "偷学被嘲讽：偷学照样考不过我，废物", effects: { mood: -1 } },
-        { text: "偷学了一些动态规划", effects: { dp: 1 } },
-        { text: "偷学了一些数据结构", effects: { ds: 1 } },
-        { text: "偷学了一些字符串", effects: { string: 1 } },
-        { text: "偷学了一些图论", effects: { graph: 1 } },
-        { text: "偷学了一些组合计数", effects: { combinatorics: 1 } },
+        { text: "偷学了一些语文", effects: { dp: 1 } },
+        { text: "偷学了一些数学", effects: { ds: 1 } },
+        { text: "偷学了一些英语", effects: { string: 1 } },
+        { text: "偷学了一些物化", effects: { graph: 1 } },
+        { text: "偷学了一些政史", effects: { combinatorics: 1 } },
         { text: "偷学了一些文化课", effects: { culture: 1 } }
       ],
       optionsToShow: 1
@@ -406,11 +406,11 @@ const eventSystem = {
       title: "遗忘",
       description: "一些知识总会在不知不觉中遗忘，就如同历史的长河终究会把你我淹没。——希望大家一直记得我，希望大家永远忘了我。",
       options: [
-        { text: "忘记动态规划", effects: { dp: -1 } },
-        { text: "忘记数据结构", effects: { ds: -1 } },
-        { text: "忘记字符串", effects: { string: -1 } },
-        { text: "忘记图论", effects: { graph: -1 } },
-        { text: "忘记组合计数", effects: { combinatorics: -1 } }
+        { text: "忘记语文", effects: { dp: -1 } },
+        { text: "忘记数学", effects: { ds: -1 } },
+        { text: "忘记英语", effects: { string: -1 } },
+        { text: "忘记物化", effects: { graph: -1 } },
+        { text: "忘记政史", effects: { combinatorics: -1 } }
       ],
       optionsToShow: 3
     },
@@ -427,14 +427,14 @@ const eventSystem = {
     },
     "长期训练": {
       title: "长期训练",
-      description: "你很幸运地进入到了最好的高中，这里有着最好的师资力量，最好的学习氛围，最好的竞赛氛围。你开始进行长期训练，水平很快得到了提升。",
+      description: "你很幸运地进入到了最好的初中，这里有着最好的师资力量，最好的学习氛围，最好的竞赛氛围。你开始进行长期训练，水平很快得到了提升。",
       options: [
         { text: "综合训练", effects: { dp: 1, ds: 1, string: 1, graph: 1, combinatorics: 1 } },
-        { text: "动态规划专项训练", effects: { dp: 4 } },
-        { text: "数据结构专项训练", effects: { ds: 4 } },
-        { text: "字符串专项训练", effects: { string: 4 } },
-        { text: "图论专项训练", effects: { graph: 4 } },
-        { text: "组合计数专项训练", effects: { combinatorics: 4 } },
+        { text: "语文专项训练", effects: { dp: 4 } },
+        { text: "数学专项训练", effects: { ds: 4 } },
+        { text: "英语专项训练", effects: { string: 4 } },
+        { text: "物化专项训练", effects: { graph: 4 } },
+        { text: "政史专项训练", effects: { combinatorics: 4 } },
         { text: "文化课训练", effects: { culture: 4 } }
       ],
       optionsToShow: 5
@@ -443,11 +443,11 @@ const eventSystem = {
       title: "提升训练",
       description: "人们只有会利用时间，才能真正地提升自己。你在碎片的时间里反复训练，水平也许会得到略微的提升——当然，你也可以选择摸鱼。",
       options: [
-        { text: "动态规划专项训练", effects: { dp: 1 } },
-        { text: "数据结构专项训练", effects: { ds: 1 } },
-        { text: "字符串专项训练", effects: { string: 1 } },
-        { text: "图论专项训练", effects: { graph: 1 } },
-        { text: "组合计数专项训练", effects: { combinatorics: 1 } },
+        { text: "语文专项训练", effects: { dp: 1 } },
+        { text: "数学专项训练", effects: { ds: 1 } },
+        { text: "英语专项训练", effects: { string: 1 } },
+        { text: "物化专项训练", effects: { graph: 1 } },
+        { text: "政史专项训练", effects: { combinatorics: 1 } },
         { text: "文化课训练", effects: { culture: 1 } },
         { text: "训练不如摸鱼", effects: {}, nextEvent: "摸鱼" }
       ],
@@ -457,7 +457,7 @@ const eventSystem = {
       title: "比赛训练",
       description: "教练告诉你，比赛是检验你水平的最好方式。你开始参加比赛，你希望能在平时的比赛中找到自己的不足，并加以改进。这也许会给你正式的比赛带来帮助。",
       options: [
-        { text: "按照教练推荐的，参加校内模拟赛", effects: {}, nextEvent: "模拟赛" },
+        { text: "按照教练推荐的，参加校内模拟考", effects: {}, nextEvent: "模拟考" },
         { text: "你注意到一些网站上也有比赛资源，也许可以打洛谷月赛", effects: {}, nextEvent: "月赛" },
         { text: "你偶然听说了 Codeforces，大家都说这里的题目质量很高，你决定去试一试", effects: {}, nextEvent: "Codeforces" },
         { text: "你偶然听说了 Atcoder，大家都说这里的题目质量很高，你决定去试一试", effects: {}, nextEvent: "Atcoder" },
@@ -471,7 +471,7 @@ const eventSystem = {
       isShop: true,
       options: [
         { text: "思维提升", effects: { thinking: 2 }, cost: 300, description: "花费300点决心提升2点思维能力（下次购买费用+200）" },
-        { text: "代码提升", effects: { coding: 2 }, cost: 300, description: "花费300点决心提升2点代码能力（下次购买费用+200）" },
+        { text: "过程提升", effects: { coding: 2 }, cost: 300, description: "花费300点决心提升2点过程能力（下次购买费用+200）" },
         { text: "细心提升", effects: { carefulness: 2 }, cost: 300, description: "花费300点决心提升2点细心（下次购买费用+200）" },
         { text: "随机提升", effects: { random: ["dp", "ds", "string", "graph", "combinatorics"] }, cost: 300, description: "花费300点决心随机提升一项算法能力（下次购买费用+200）" },
         { text: "心态恢复", effects: { mood: 2 }, cost: 500, description: "花费500点决心提升2点心态（下次购买费用+100）" },
@@ -539,9 +539,9 @@ const eventSystem = {
       ],
       optionsToShow: 3
     },
-    "模拟赛": {
-      title: "模拟赛",
-      description: "你参加了一场校内模拟赛...",
+    "模拟考": {
+      title: "模拟考",
+      description: "你参加了一场校内模拟考...",
       options: [
         {
           text: "必须认真打好每一个部分分",
@@ -659,7 +659,7 @@ let isEventActive = false; // 是否正在显示事件
 
 // 记录日志
 function logEvent(message, type = 'normal') {
-  // 确保message是字符串
+  // 确保message是英语
   message = String(message || '');
 
   let color = '#000000'; // 默认黑色
@@ -673,10 +673,10 @@ function logEvent(message, type = 'normal') {
       prefix = '【思考】';
       break;
     case 'code':
-      prefix = '【代码】';
+      prefix = '【过程】';
       break;
     case 'check':
-      prefix = '【对拍】';
+      prefix = '【检查】';
       break;
   }
 
@@ -762,14 +762,14 @@ const randomEvents = [
     probability: 0.03
   },
   {
-    name: "代码bug",
-    description: "写着写着发现之前的代码有问题...",
+    name: "过程bug",
+    description: "写着写着发现之前的过程有问题...",
     effect: (stats) => {
       stats.codeProgress = Math.max(0, stats.codeProgress - 1);
-      return "代码进度-1";
+      return "过程进度-1";
     },
     condition: (stats) => {
-      // 代码进度超过一半且最近操作都是写代码时触发
+      // 过程进度超过一半且最近操作都是写过程时触发
       const recentActions = stats.lastActions.slice(-2);
       return stats.codeProgress > calculateCodeTime(stats.currentSubProblem) / 2 &&
         recentActions.every(action => action === 'code');
@@ -777,14 +777,14 @@ const randomEvents = [
     probability: 0.03
   },
   {
-    name: "键盘故障",
-    description: "键盘突然有点不太灵了...",
+    name: "笔故障",
+    description: "笔突然有点不太灵了...",
     effect: (stats) => {
       stats.mood = Math.max(0, stats.mood - 1);
       return "心态值-1";
     },
     condition: (stats) => {
-      // 连续写代码时触发
+      // 连续写过程时触发
       const recentActions = stats.lastActions.slice(-2);
       return recentActions.every(action => action === 'code');
     },
@@ -851,12 +851,12 @@ function triggerRandomEvent(problemIndex, subProblemIndex) {
 // 剧情配置
 const storyConfigs = {
   1: {
-    title: "NOIP",
-    content: "今天是NOIP复赛的日子，你坐在机房里，看着屏幕上的题目。作为一名OI选手，你需要在有限的时间内完成这些题目。合理分配时间，发挥你的算法专精，争取获得好成绩！"
+    title: "二模",
+    content: "今天是二模复赛的日子，你坐在机房里，看着屏幕上的题目。作为一名OI选手，你需要在有限的时间内完成这些题目。合理分配时间，发挥你的算法专精，争取获得好成绩！"
   },
   2: {
-    title: "省选模拟赛",
-    content: "这是一场省选模拟赛，题目难度比NOIP更高。你需要更加谨慎地思考，合理利用你的算法专精。记住，细节决定成败！"
+    title: "三模模拟考",
+    content: "这是一场三模模拟考，题目难度比二模更高。你需要更加谨慎地思考，合理利用你的算法专精。记住，细节决定成败！"
   },
   3: {
     title: "集训队选拔",
@@ -1006,30 +1006,30 @@ function updateSubProblems() {
     subProblemDiv.className = "sub-problem";
     if (thinkProgress[currentProblem - 1][index] >= calculateThinkTime(subProblem)) thinkProgress[currentProblem - 1][index] = calculateThinkTime(subProblem);
 
-    // 构建属性显示字符串
+    // 构建属性显示英语
     const attributes = [];
-    if (subProblem.dp > 0) attributes.push(`<span title="需要动态规划相关知识，数值越高难度越大">动态规划: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.dp}</span>`);
-    if (subProblem.ds > 0) attributes.push(`<span title="需要数据结构相关知识，数值越高难度越大">数据结构: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.ds}</span>`);
-    if (subProblem.string > 0) attributes.push(`<span title="需要字符串算法相关知识，数值越高难度越大">字符串: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.string}</span>`);
-    if (subProblem.graph > 0) attributes.push(`<span title="需要图论相关知识，数值越高难度越大">图论: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.graph}</span>`);
-    if (subProblem.combinatorics > 0) attributes.push(`<span title="需要组合计数相关知识，数值越高难度越大">组合计数: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.combinatorics}</span>`);
+    if (subProblem.dp > 0) attributes.push(`<span title="需要语文相关知识，数值越高难度越大">语文: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.dp}</span>`);
+    if (subProblem.ds > 0) attributes.push(`<span title="需要数学相关知识，数值越高难度越大">数学: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.ds}</span>`);
+    if (subProblem.string > 0) attributes.push(`<span title="需要英语算法相关知识，数值越高难度越大">英语: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.string}</span>`);
+    if (subProblem.graph > 0) attributes.push(`<span title="需要物化相关知识，数值越高难度越大">物化: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.graph}</span>`);
+    if (subProblem.combinatorics > 0) attributes.push(`<span title="需要政史相关知识，数值越高难度越大">政史: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.combinatorics}</span>`);
     if (subProblem.adhoc > 0) attributes.push(`<span title="需要特殊解法，数值越高难度越大">Adhoc: ${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : subProblem.adhoc}</span>`);
     if (subProblem.thinking > 0) attributes.push(`<span title="题目思维难度，影响思考成功率">思维: ${subProblem.thinking}</span>`);
-    if (subProblem.coding > 0) attributes.push(`<span title="代码实现难度，影响写代码所需时间">代码: ${subProblem.coding}</span>`);
-    if (subProblem.detail > 0) attributes.push(`<span title="代码细节要求，影响代码实现成功率">细节: ${subProblem.detail}</span>`);
-    if (subProblem.trap > 0) attributes.push(`<span title="题目中的陷阱数量，增加代码出错概率">陷阱: ${subProblem.trap}</span>`);
+    if (subProblem.coding > 0) attributes.push(`<span title="过程实现难度，影响写过程所需时间">过程: ${subProblem.coding}</span>`);
+    if (subProblem.detail > 0) attributes.push(`<span title="过程细节要求，影响过程实现成功率">细节: ${subProblem.detail}</span>`);
+    if (subProblem.trap > 0) attributes.push(`<span title="题目中的陷阱数量，增加过程出错概率">陷阱: ${subProblem.trap}</span>`);
     if (subProblem.independent > 0) attributes.push(`<span title="独立部分分的思考进度不会影响其他部分分">独立: ${subProblem.independent}</span>`);
-    if (subProblem.heat > 0) attributes.push(`<span title="无效思考或无效代码会导致心态下降的程度">红温: ${subProblem.heat}</span>`);
+    if (subProblem.heat > 0) attributes.push(`<span title="无效思考或无效过程会导致心态下降的程度">红温: ${subProblem.heat}</span>`);
     if (subProblem.blur > 0) attributes.push(`<span title="题目难度未知，需要思考后才能显示">模糊: ${subProblem.blur}</span>`);
-    if (subProblem.fallback > 0) attributes.push(`<span title="对拍失败时额外回退代码进度的值">回退: ${subProblem.fallback}</span>`);
-    if (subProblem.inspire > 0) attributes.push(`<span title="代码完成时提升心态的值">激励: ${subProblem.inspire}</span>`);
+    if (subProblem.fallback > 0) attributes.push(`<span title="检查失败时额外回退过程进度的值">回退: ${subProblem.fallback}</span>`);
+    if (subProblem.inspire > 0) attributes.push(`<span title="过程完成时提升心态的值">激励: ${subProblem.inspire}</span>`);
 
     subProblemDiv.innerHTML = `
                   <h4>部分分 ${index + 1} (分数: ${subProblem.score})</h4>
                   <p>${attributes.join(', ')}</p>
                   <button class="blue ${thinkProgress[currentProblem - 1][index] >= calculateThinkTime(subProblem) ? 'completed' : ''}" onclick="thinkSubProblem(${currentProblem - 1}, ${index})" ${(isCodeComplete[currentProblem - 1][index] || thinkProgress[currentProblem - 1][index] >= calculateThinkTime(subProblem)) ? 'disabled' : ''}>思考 (<span>${thinkProgress[currentProblem - 1][index]}/${subProblem.blur && thinkProgress[currentProblem - 1][index] < calculateThinkTime(subProblem) ? '?' : calculateThinkTime(subProblem)}</span>, 成功率: <span>${Math.round(calculateThinkSuccessRate(subProblem) * 100)}%</span>)</button>
-                  <button class="blue ${codeProgress[currentProblem - 1][index] >= calculateCodeTime(subProblem) ? 'completed' : ''}" onclick="writeCodeSubProblem(${currentProblem - 1}, ${index})" ${thinkProgress[currentProblem - 1][index] >= calculateThinkTime(subProblem) && !isCodeComplete[currentProblem - 1][index] && codeProgress[currentProblem - 1][index] < calculateCodeTime(subProblem) ? '' : 'disabled'}>写代码 (<span>${codeProgress[currentProblem - 1][index]}/${calculateCodeTime(subProblem)}</span>, 成功率: <span>${Math.round(calculateCodeSuccessRate(subProblem) * 100)}%</span>)</button>
-                  <button class="btn ${isIOIContest ? 'purple' : 'blue'} ${isCodeComplete[currentProblem - 1][index] ? 'completed' : ''}" onclick="checkCodeSubProblem(${currentProblem - 1}, ${index})" ${codeProgress[currentProblem - 1][index] >= calculateCodeTime(subProblem) && !isCodeComplete[currentProblem - 1][index] && (isIOIContest || timePoints > 0) ? '' : 'disabled'}>${isIOIContest ? '提交' : '对拍'} (出错概率: <span>${errorRates[currentProblem - 1][index] >= 0 ? `${Math.round(errorRates[currentProblem - 1][index] * 100)}` : '?'}%</span>)</button>
+                  <button class="blue ${codeProgress[currentProblem - 1][index] >= calculateCodeTime(subProblem) ? 'completed' : ''}" onclick="writeCodeSubProblem(${currentProblem - 1}, ${index})" ${thinkProgress[currentProblem - 1][index] >= calculateThinkTime(subProblem) && !isCodeComplete[currentProblem - 1][index] && codeProgress[currentProblem - 1][index] < calculateCodeTime(subProblem) ? '' : 'disabled'}>写过程 (<span>${codeProgress[currentProblem - 1][index]}/${calculateCodeTime(subProblem)}</span>, 成功率: <span>${Math.round(calculateCodeSuccessRate(subProblem) * 100)}%</span>)</button>
+                  <button class="btn ${isIOIContest ? 'purple' : 'blue'} ${isCodeComplete[currentProblem - 1][index] ? 'completed' : ''}" onclick="checkCodeSubProblem(${currentProblem - 1}, ${index})" ${codeProgress[currentProblem - 1][index] >= calculateCodeTime(subProblem) && !isCodeComplete[currentProblem - 1][index] && (isIOIContest || timePoints > 0) ? '' : 'disabled'}>${isIOIContest ? '提交' : '检查'} (出错概率: <span>${errorRates[currentProblem - 1][index] >= 0 ? `${Math.round(errorRates[currentProblem - 1][index] * 100)}` : '?'}%</span>)</button>
                   ${(!isIOIContest && codeProgress[currentProblem - 1][index] >= calculateCodeTime(subProblem)) || (isIOIContest && isCodeComplete[currentProblem - 1][index]) ? '<p style="color: green;">已完成</p>' : ''}
               `;
     subProblemPanel.appendChild(subProblemDiv);
@@ -1049,11 +1049,11 @@ function calculateThinkTime(subProblem) {
   return thinkTime;
 }
 
-// 计算代码时间
+// 计算过程时间
 function calculateCodeTime(subProblem) {
   if (debugmode == true) return 1;
   let codeTime = subProblem.coding;
-  // 迅捷属性影响代码时间
+  // 迅捷属性影响过程时间
   if (playerStats.quickness > 0) {
     codeTime = Math.max(1, codeTime - playerStats.quickness);
   }
@@ -1071,7 +1071,7 @@ function calculateThinkSuccessRate(subProblem) {
   return Math.max(0.3, Math.min(0.95, baseProb)); // 限制概率在30%-95%之间
 }
 
-// 计算写代码成功概率
+// 计算写过程成功概率
 function calculateCodeSuccessRate(subProblem) {
   let baseProb = 1; // 基础成功率100%
   if (debugmode == true) return 1;
@@ -1082,7 +1082,7 @@ function calculateCodeSuccessRate(subProblem) {
   return Math.max(0.4, Math.min(0.95, baseProb)); // 限制概率在40%-95%之间
 }
 
-// 计算代码出错概率
+// 计算过程出错概率
 function calculateErrorRate(subProblem) {
   let baseProb = 0.1; // 基础出错概率10%
   if (debugmode == true) return 0;
@@ -1112,7 +1112,7 @@ function startStory(storyIndex) {
 
   // 添加游戏开始的日志
   logEvent("游戏开始！", 'normal');
-  logEvent("你已完成天赋分配，即将开始NOIP比赛。", 'normal');
+  logEvent("你已完成天赋分配，即将开始二模比赛。", 'normal');
 }
 
 function startGame() {
@@ -1128,8 +1128,8 @@ function startGame() {
   }
   mood = Math.max(0, mood - moodDrop);
 
-  // 添加NOIP开始的日志
-  logEvent("NOIP正式开始！", 'normal');
+  // 添加二模开始的日志
+  logEvent("二模正式开始！", 'normal');
   logEvent("你坐在考场中，深吸一口气，准备迎接挑战...", 'normal');
   logEvent(`进入考场，心态值-${moodDrop}，当前心态值：${mood}`, 'normal');
   logEvent("请合理分配时间，仔细思考每个部分分。", 'normal');
@@ -1291,19 +1291,19 @@ function thinkSubProblem(problemIndex, subProblemIndex) {
   updateStatus();
 }
 
-// 写代码部分分
+// 写过程部分分
 function writeCodeSubProblem(problemIndex, subProblemIndex) {
   if (timePoints <= 0) {
-    alert("时间点不足，无法写代码！");
+    alert("时间点不足，无法写过程！");
     return;
   }
 
   const subProblem = subProblems[problemIndex][subProblemIndex];
   let invalidCodeProb = 1 - calculateCodeSuccessRate(subProblem);
 
-  // 判断是否无效代码
+  // 判断是否无效过程
   if (Math.random() < invalidCodeProb) {
-    logEvent(`T${problemIndex + 1} 部分分 ${subProblemIndex + 1} 写代码无效，未取得进展！`, 'code');
+    logEvent(`T${problemIndex + 1} 部分分 ${subProblemIndex + 1} 写过程无效，未取得进展！`, 'code');
     // 根据红温值降低心态
     if (subProblem.heat > 0) {
       let moodDrop = subProblem.heat;
@@ -1317,9 +1317,9 @@ function writeCodeSubProblem(problemIndex, subProblemIndex) {
   } else {
     codeProgress[problemIndex][subProblemIndex] += 1;
     currentCodeProgress = codeProgress[problemIndex][subProblemIndex];
-    logEvent(`T${problemIndex + 1} 部分分 ${subProblemIndex + 1} 写代码成功！`, 'code');
+    logEvent(`T${problemIndex + 1} 部分分 ${subProblemIndex + 1} 写过程成功！`, 'code');
 
-    // 如果代码刚好完成，计算并存储对拍失败概率
+    // 如果过程刚好完成，计算并存储检查失败概率
     if (codeProgress[problemIndex][subProblemIndex] === calculateCodeTime(subProblem)) {
       errorRates[problemIndex][subProblemIndex] = calculateErrorRate(subProblem);
     }
@@ -1334,19 +1334,19 @@ function writeCodeSubProblem(problemIndex, subProblemIndex) {
   timePoints -= 1;
   updateStatus();
 
-  // 如果代码完成且有激励效果
+  // 如果过程完成且有激励效果
   if (codeProgress[problemIndex][subProblemIndex] >= calculateCodeTime(subProblem)) {
-    // 如果代码完成且有激励效果
+    // 如果过程完成且有激励效果
     if (subProblem.inspire > 0) {
       let moodGain = subProblem.inspire;
       mood = Math.min(moodLimit, mood + moodGain);
-      logEvent(`完成代码带来了激励效果，心态值提升${moodGain}点！`, 'code');
+      logEvent(`完成过程带来了激励效果，心态值提升${moodGain}点！`, 'code');
       document.getElementById("player-mood").textContent = mood;
     }
   }
 }
 
-// 对拍部分分
+// 检查部分分
 function checkCodeSubProblem(problemIndex, subProblemIndex) {
   // 获取当前比赛配置
   const currentContest = Object.values(contestConfigs).find(config => config.name === currentContestName);
@@ -1363,8 +1363,8 @@ function checkCodeSubProblem(problemIndex, subProblemIndex) {
   lastActions.push('check');
   if (lastActions.length > 5) lastActions.shift();
 
-  // 记录对拍/提交操作到日志
-  logEvent(`${isIOIContest ? '提交' : '对拍'}第 ${problemIndex + 1} 题的第 ${subProblemIndex + 1} 个部分`, 'check');
+  // 记录检查/提交操作到日志
+  logEvent(`${isIOIContest ? '提交' : '检查'}第 ${problemIndex + 1} 题的第 ${subProblemIndex + 1} 个部分`, 'check');
   if (!isIOIContest) {
     logEvent(`消耗了 1 个时间点，剩余 ${timePoints} 个时间点`, 'check');
   }
@@ -1377,11 +1377,11 @@ function checkCodeSubProblem(problemIndex, subProblemIndex) {
   logEvent(`调试信息：随机数=${random.toFixed(3)}，错误率=${errorRate.toFixed(3)}`, 'check');
 
   if (random < errorRate) {
-    // 对拍/提交失败
+    // 检查/提交失败
     if (isIOIContest && Math.random() < 0.08) {
       mood = Math.max(0, mood - 1);
       document.getElementById('event-title').textContent = "提交系统服务器爆炸";
-      document.getElementById('random-event-description').textContent = "比赛 OJ 太不牛了，服务器支持不了这么多选手的提交，你的代码没有成功提交";
+      document.getElementById('random-event-description').textContent = "比赛 OJ 太不牛了，服务器支持不了这么多选手的提交，你的过程没有成功提交";
       document.getElementById('event-effect').textContent = "心态-1";
       document.getElementById("event-panel").style.display = "flex";
       isEventActive = true;
@@ -1391,17 +1391,17 @@ function checkCodeSubProblem(problemIndex, subProblemIndex) {
       const fallbackAmount = subProblem.fallback + 1;
       codeProgress[problemIndex][subProblemIndex] = Math.max(0, codeProgress[problemIndex][subProblemIndex] - fallbackAmount);
   
-      logEvent(`${isIOIContest ? '提交' : '对拍'}失败！代码进度-${fallbackAmount}`, 'check');
-      logEvent(`当前代码进度：${codeProgress[problemIndex][subProblemIndex]}/${calculateCodeTime(subProblem)}`, 'check');
+      logEvent(`${isIOIContest ? '提交' : '检查'}失败！过程进度-${fallbackAmount}`, 'check');
+      logEvent(`当前过程进度：${codeProgress[problemIndex][subProblemIndex]}/${calculateCodeTime(subProblem)}`, 'check');
       logEvent(`当前心态值：${mood}`, 'check');
     }
   } else {
-    // 对拍/提交成功
+    // 检查/提交成功
     const subProblem = subProblems[problemIndex][subProblemIndex];
     isCodeComplete[problemIndex][subProblemIndex] = true;
     mood = Math.min(moodLimit, mood + (subProblem.inspire || 0));
 
-    logEvent(`${isIOIContest ? '提交' : '对拍'}成功！获得 ${subProblem.score} 分`, 'check');
+    logEvent(`${isIOIContest ? '提交' : '检查'}成功！获得 ${subProblem.score} 分`, 'check');
     if (subProblem.inspire) {
       logEvent(`受到鼓舞，心态值+${subProblem.inspire}`, 'check');
     }
@@ -1460,16 +1460,16 @@ function showResults() {
       const codeCompleted = codeProgress[i][j] >= calculateCodeTime(subProblem);
       const checkCompleted = isCodeComplete[i][j];
 
-      // 预期得分：写完代码就算通过，取最大值
+      // 预期得分：写完过程就算通过，取最大值
       if (codeCompleted) {
         problemExpectedScore = Math.max(problemExpectedScore, subProblem.score);
       }
 
-      // 实际得分：根据对拍结果和概率计算，取最大值
+      // 实际得分：根据检查结果和概率计算，取最大值
       if (checkCompleted) {
         problemActualScore = Math.max(problemActualScore, subProblem.score);
       } else if (codeCompleted && !isIOIContest) {
-        // 写完代码但没对拍，根据概率计算（仅在非IOI赛制下）
+        // 写完过程但没检查，根据概率计算（仅在非IOI赛制下）
         const successRate = 1 - errorRates[i][j];
         for (let k = j; k >= 0; k--) {
           if (Math.random() < successRate) {
@@ -1482,8 +1482,8 @@ function showResults() {
       // 记录部分分状态
       subProblemResults.push(`
                       <p>部分分 ${j + 1} (${subProblem.score}分): 
-                      ${checkCompleted ? (isIOIContest ? '提交通过' : '对拍通过') :
-          codeCompleted && !isIOIContest ? `写完代码(通过概率: ${Math.round((1 - errorRates[i][j]) * 100)}%)` :
+                      ${checkCompleted ? (isIOIContest ? '提交通过' : '检查通过') :
+          codeCompleted && !isIOIContest ? `写完过程(通过概率: ${Math.round((1 - errorRates[i][j]) * 100)}%)` :
             '未完成'}</p>
                   `);
     }
@@ -1516,19 +1516,19 @@ function showResults() {
 
   // 添加总分显示
   let totalScoreHTML = '';
-  if (currentContestName === "省选Day2") {
-    const provinceScore = totalActualScore + playerStats.prevScore + (playerStats.noipScore || 0);
+  if (currentContestName === "三模Day2") {
+    const provinceScore = totalActualScore + playerStats.prevScore + (playerStats.二模Score || 0);
     playerStats.tempScore = provinceScore;
     totalScoreHTML = `
                   <div class="total-score">
-                      <h4>省选总分</h4>
+                      <h4>三模总分</h4>
                       <p>Day1得分: ${playerStats.prevScore}</p>
                       <p>Day2得分: ${totalActualScore}</p>
-                      <p>NOIP得分: ${playerStats.noipScore || 0}</p>
-                      <p>最终总分: ${provinceScore.toFixed(1)} (Day1 + Day2 + NOIP)</p>
+                      <p>二模得分: ${playerStats.二模Score || 0}</p>
+                      <p>最终总分: ${provinceScore.toFixed(1)} (Day1 + Day2 + 二模)</p>
                   </div>
               `;
-  } else if (currentContestName === "NOI Day2") {
+  } else if (currentContestName === "中考 Day2") {
     let noiScore = totalActualScore + playerStats.prevScore;
     if (playerStats.isProvincialTeamA) {
       noiScore += 5;
@@ -1536,7 +1536,7 @@ function showResults() {
     playerStats.tempScore = noiScore;
     totalScoreHTML = `
                   <div class="total-score">
-                      <h4>NOI总分</h4>
+                      <h4>中考总分</h4>
                       <p>Day1得分: ${playerStats.prevScore}</p>
                       <p>Day2得分: ${totalActualScore}</p>
                       <p>基础总分: ${(totalActualScore + playerStats.prevScore).toFixed(1)} (Day1 + Day2)</p>
@@ -1621,14 +1621,14 @@ function showResults() {
   }
 
   // 在显示总分后添加获奖情况（只在特定比赛显示）
-  if (currentContestName !== "省选Day1" && currentContestName !== "NOI Day1" && currentContestName !== "IOI Day1" && currentContestName !== "CTT Day1" && currentContestName !== "CTS Day1" && currentContestName !== "CTT Day2" && currentContestName !== "CTT Day3") {
+  if (currentContestName !== "三模Day1" && currentContestName !== "中考 Day1" && currentContestName !== "IOI Day1" && currentContestName !== "CTT Day1" && currentContestName !== "CTS Day1" && currentContestName !== "CTT Day2" && currentContestName !== "CTT Day3") {
     let award;
-    if (currentContestName === "省选Day2") {
-      award = calculateAward("省选", totalActualScore, playerStats.prevScore);
+    if (currentContestName === "三模Day2") {
+      award = calculateAward("三模", totalActualScore, playerStats.prevScore);
       // 记录是否进入省队
       playerStats.isProvincialTeam = award.includes("省队");
-    } else if (currentContestName === "NOI Day2") {
-      award = calculateAward("NOI", totalActualScore, playerStats.prevScore);
+    } else if (currentContestName === "中考 Day2") {
+      award = calculateAward("中考", totalActualScore, playerStats.prevScore);
     } else if (currentContestName === "IOI Day2") {
       award = calculateAward("IOI", totalActualScore, playerStats.prevScore);
     } else if (currentContestName === "CTT Day4") {
@@ -1640,10 +1640,10 @@ function showResults() {
     }
 
     // 保存比赛成绩
-    if (currentContestName === "CSP-S") {
+    if (currentContestName === "一模") {
       playerStats.cspScore = totalActualScore;
-    } else if (currentContestName === "NOIP") {
-      playerStats.noipScore = totalActualScore;
+    } else if (currentContestName === "二模") {
+      playerStats.二模Score = totalActualScore;
     }
 
     // 添加获奖显示
@@ -1702,7 +1702,7 @@ function showResults() {
 // 添加训练事件配置
 let remainingEvents = 5; // 主事件剩余次数
 let totalTrainingEvents = 5; // 主事件总次数
-let currentPhase = 1; // 阶段标记：1-第一次训练，2-CSP-S，3-第二次训练，4-NOIP，5-第三次训练，6-WC，7-第四次训练，8-省选Day1，9-第五次训练，10-省选Day2，11-第六次训练，12-APIO，13-第七次训练，14-NOI Day1，15-第八次训练，16-NOI Day2，17-高二第一次训练，18-CSP-S，19-NOIP，20-第二次训练，21-WC，22-第三次训练，23-省选Day1，24-第四次训练，25-NOI Day1，26-第五次训练，27-APIO，28-第七次训练，29-NOI Day1，30-第八次训练，31-NOI Day2，32-游戏结束
+let currentPhase = 1; // 阶段标记：1-第一次训练，2-一模，3-第二次训练，4-二模，5-第三次训练，6-WC，7-第四次训练，8-三模Day1，9-第五次训练，10-三模Day2，11-第六次训练，12-APIO，13-第七次训练，14-中考 Day1，15-第八次训练，16-中考 Day2，17-高二第一次训练，18-一模，19-二模，20-第二次训练，21-WC，22-第三次训练，23-三模Day1，24-第四次训练，25-中考 Day1，26-第五次训练，27-APIO，28-第七次训练，29-中考 Day1，30-第八次训练，31-中考 Day2，32-游戏结束
 
 // 修改显示训练事件的函数
 function showNextTrainingEvent() {
@@ -1914,14 +1914,14 @@ function selectSubOption(option) {
 function startContest(contestType) {
   // 更新比赛名称显示
   const contestNameMap = {
-    "CSP-S": "CSP-S",
-    "NOIP": "NOIP",
+    "一模": "一模",
+    "二模": "二模",
     "WC": "WC",
-    "省选Day1": "省选Day1",
-    "省选Day2": "省选Day2",
+    "三模Day1": "三模Day1",
+    "三模Day2": "三模Day2",
     "APIO": "APIO",
-    "NOI Day1": "NOI Day1",
-    "NOI Day2": "NOI Day2",
+    "中考 Day1": "中考 Day1",
+    "中考 Day2": "中考 Day2",
     "CTT Day1": "CTT Day1",
     "CTT Day2": "CTT Day2",
     "CTT Day3": "CTT Day3",
@@ -1937,14 +1937,14 @@ function startContest(contestType) {
   // 根据比赛类型设置配置
   let config;
   switch (contestType) {
-    case "CSP-S": config = contestConfigs[1]; break;
-    case "NOIP": config = contestConfigs[2]; break;
+    case "一模": config = contestConfigs[1]; break;
+    case "二模": config = contestConfigs[2]; break;
     case "WC": config = contestConfigs[3]; break;
-    case "省选Day1": config = contestConfigs[4]; break;
-    case "省选Day2": config = contestConfigs[5]; break;
+    case "三模Day1": config = contestConfigs[4]; break;
+    case "三模Day2": config = contestConfigs[5]; break;
     case "APIO": config = contestConfigs[6]; break;
-    case "NOI Day1": config = contestConfigs[7]; break;
-    case "NOI Day2": config = contestConfigs[8]; break;
+    case "中考 Day1": config = contestConfigs[7]; break;
+    case "中考 Day2": config = contestConfigs[8]; break;
     case "CTT Day1": config = contestConfigs[9]; break;
     case "CTT Day2": config = contestConfigs[10]; break;
     case "CTT Day3": config = contestConfigs[11]; break;
@@ -2064,13 +2064,13 @@ function startContest(contestType) {
 
 function getStatName(key) {
   const statNames = {
-    dp: "动态规划",
-    ds: "数据结构",
-    string: "字符串",
-    graph: "图论",
-    combinatorics: "组合计数",
+    dp: "语文",
+    ds: "数学",
+    string: "英语",
+    graph: "物化",
+    combinatorics: "政史",
     thinking: "思维",
-    coding: "代码",
+    coding: "过程",
     carefulness: "细心",
     mood: "心态",
     determination: "决心",
@@ -2126,7 +2126,7 @@ function startNormalMode() {
   currentProblem = 1;
   totalProblems = 0;
   remainingPoints = 15;
-  currentContestName = "NOIP普及组";
+  currentContestName = "二模普及组";
 
   // 重置玩家属性
   playerStats = {
@@ -2173,7 +2173,7 @@ function startTrainingEvents() {
     totalTrainingEvents = 4;
     remainingEvents = 4;
   } else if ([9, 15, 21, 33, 40, 45].includes(currentPhase)) {
-    // 省选Day2前、NOI Day2前、CTT前：2次
+    // 三模Day2前、中考 Day2前、CTT前：2次
     totalTrainingEvents = 2;
     remainingEvents = 2;
   } else if (currentPhase === 17) {
@@ -2181,7 +2181,7 @@ function startTrainingEvents() {
     totalTrainingEvents = 8;
     remainingEvents = 8;
   } else if ([19, 31, 38].includes(currentPhase)) {
-    // NOIP前、省选Day1前：5次
+    // 二模前、三模Day1前：5次
     totalTrainingEvents = 5;
     remainingEvents = 5;
   } else if ([42, 53].includes(currentPhase)) {
@@ -2242,24 +2242,24 @@ function showTrainingEvent(eventName) {
   // 设置主标题（根据当前阶段显示不同的标题）和副标题（事件名称）
   let phaseText = "";
   switch (currentPhase) {
-    case 1: phaseText = "CSP-S"; break;
-    case 3: phaseText = "NOIP"; break;
+    case 1: phaseText = "一模"; break;
+    case 3: phaseText = "二模"; break;
     case 5: phaseText = "WC"; break;
-    case 7: phaseText = "省选Day1"; break;
-    case 9: phaseText = "省选Day2"; break;
+    case 7: phaseText = "三模Day1"; break;
+    case 9: phaseText = "三模Day2"; break;
     case 11: phaseText = "APIO"; break;
-    case 13: phaseText = "NOI Day1"; break;
-    case 15: phaseText = "NOI Day2"; break;
-    case 17: phaseText = "CSP-S"; break;
-    case 19: phaseText = "NOIP"; break;
+    case 13: phaseText = "中考 Day1"; break;
+    case 15: phaseText = "中考 Day2"; break;
+    case 17: phaseText = "一模"; break;
+    case 19: phaseText = "二模"; break;
     case 21: phaseText = "CTT"; break;
     case 26: phaseText = "CTS"; break;
     case 29: phaseText = "WC"; break;
-    case 31: phaseText = "省选Day1"; break;
-    case 33: phaseText = "省选Day2"; break;
+    case 31: phaseText = "三模Day1"; break;
+    case 33: phaseText = "三模Day2"; break;
     case 35: phaseText = "APIO"; break;
-    case 38: phaseText = "NOI Day1"; break;
-    case 40: phaseText = "NOI Day2"; break;
+    case 38: phaseText = "中考 Day1"; break;
+    case 40: phaseText = "中考 Day2"; break;
     case 42: phaseText = "IOI"; break;
     case 45: phaseText = "CTT"; break;
     case 50: phaseText = "CTS"; break;
@@ -2482,9 +2482,9 @@ function handlePhaseTransition() {
     'expert': 1.1   // 专家难度分数线提高10%
   }[gameDifficulty];
   if (currentPhase === 1) {
-    logEvent("CSP-S比赛即将开始...", 'event');
+    logEvent("一模比赛即将开始...", 'event');
     currentPhase = 2;
-    startContest("CSP-S");
+    startContest("一模");
   } else if (currentPhase === 2) {
     logEvent("第二次训练开始...", 'event');
     currentPhase = 3;
@@ -2493,12 +2493,12 @@ function handlePhaseTransition() {
     startTrainingEvents();
   } else if (currentPhase === 3) {
     if (playerStats.cspScore <= 0) {
-      showSkipContestEvent("由于CSP-S成绩为零分", "NOIP", 4);
-      playerStats.noipScore = 0;
+      showSkipContestEvent("由于一模成绩为零分", "二模", 4);
+      playerStats.二模Score = 0;
     } else {
-      logEvent("NOIP比赛即将开始...", 'event');
+      logEvent("二模比赛即将开始...", 'event');
       currentPhase = 4;
-      startContest("NOIP");
+      startContest("二模");
     }
   } else if (currentPhase === 4) {
     logEvent("第三次训练开始...", 'event');
@@ -2508,7 +2508,7 @@ function handlePhaseTransition() {
     startTrainingEvents();
   } else if (currentPhase === 5) {
     if (playerStats.cspScore < 180 * difficultyMultiplier) { // 三等奖及以下
-      showSkipContestEvent("由于CSP-S成绩未达到二等奖及以上", "WC", 6);
+      showSkipContestEvent("由于一模成绩未达到二等奖及以上", "WC", 6);
     } else {
       logEvent("WC比赛即将开始...", 'event');
       currentPhase = 6;
@@ -2521,9 +2521,9 @@ function handlePhaseTransition() {
     totalTrainingEvents = 4;
     startTrainingEvents();
   } else if (currentPhase === 7) {
-    logEvent("省选Day1比赛即将开始...", 'event');
+    logEvent("三模Day1比赛即将开始...", 'event');
     currentPhase = 8;
-    startContest("省选Day1");
+    startContest("三模Day1");
   } else if (currentPhase === 8) {
     logEvent("第五次训练开始...", 'event');
     currentPhase = 9;
@@ -2531,9 +2531,9 @@ function handlePhaseTransition() {
     totalTrainingEvents = 2;
     startTrainingEvents();
   } else if (currentPhase === 9) {
-    logEvent("省选Day2比赛即将开始...", 'event');
+    logEvent("三模Day2比赛即将开始...", 'event');
     currentPhase = 10;
-    startContest("省选Day2");
+    startContest("三模Day2");
   } else if (currentPhase === 10) {
     logEvent("第六次训练开始...", 'event');
     currentPhase = 11;
@@ -2541,8 +2541,8 @@ function handlePhaseTransition() {
     totalTrainingEvents = 4;
     startTrainingEvents();
   } else if (currentPhase === 11) {
-    if (playerStats.noipScore < 180 * difficultyMultiplier) { // 三等奖及以下
-      showSkipContestEvent("由于NOIP成绩未达到二等奖及以上", "APIO", 12);
+    if (playerStats.二模Score < 180 * difficultyMultiplier) { // 三等奖及以下
+      showSkipContestEvent("由于二模成绩未达到二等奖及以上", "APIO", 12);
     } else {
       logEvent("APIO比赛即将开始...", 'event');
       currentPhase = 12;
@@ -2556,11 +2556,11 @@ function handlePhaseTransition() {
     startTrainingEvents();
   } else if (currentPhase === 13) {
     if (!playerStats.isProvincialTeam) {
-      showSkipContestEvent("由于未进入省队", "NOI", 16);
+      showSkipContestEvent("由于未进入省队", "中考", 16);
     } else {
-      logEvent("NOI Day1比赛即将开始...", 'event');
+      logEvent("中考 Day1比赛即将开始...", 'event');
       currentPhase = 14;
-      startContest("NOI Day1");
+      startContest("中考 Day1");
     }
   } else if (currentPhase === 14) {
     logEvent("第八次训练开始...", 'event');
@@ -2569,9 +2569,9 @@ function handlePhaseTransition() {
     totalTrainingEvents = 2;
     startTrainingEvents();
   } else if (currentPhase === 15) {
-    logEvent("NOI Day2比赛即将开始...", 'event');
+    logEvent("中考 Day2比赛即将开始...", 'event');
     currentPhase = 16;
-    startContest("NOI Day2");
+    startContest("中考 Day2");
   } else if (currentPhase === 16) {
     logEvent("第九次训练开始...", 'event');
     currentPhase = 17;
@@ -2579,9 +2579,9 @@ function handlePhaseTransition() {
     totalTrainingEvents = 8;
     startTrainingEvents();
   } else if (currentPhase === 17) {
-    logEvent("CSP-S比赛即将开始...", 'event');
+    logEvent("一模比赛即将开始...", 'event');
     currentPhase = 18;
-    startContest("CSP-S");
+    startContest("一模");
   } else if (currentPhase === 18) {
     logEvent("第十次训练开始...", 'event');
     currentPhase = 19;
@@ -2590,12 +2590,12 @@ function handlePhaseTransition() {
     startTrainingEvents();
   } else if (currentPhase === 19) {
     if (playerStats.cspScore <= 0 && playerStats.isTrainingTeam == false) {
-      showSkipContestEvent("由于CSP-S成绩为零分", "NOIP", 20);
-      playerStats.noipScore = 0;
+      showSkipContestEvent("由于一模成绩为零分", "二模", 20);
+      playerStats.二模Score = 0;
     } else {
-      logEvent("NOIP比赛即将开始...", 'event');
+      logEvent("二模比赛即将开始...", 'event');
       currentPhase = 20;
-      startContest("NOIP");
+      startContest("二模");
     }
   } else if (currentPhase === 20) {
     if (playerStats.isTrainingTeam) {
@@ -2657,7 +2657,7 @@ function handlePhaseTransition() {
     startTrainingEvents();
   } else if (currentPhase === 29) {
     if (playerStats.cspScore < 180 * difficultyMultiplier) {
-      showSkipContestEvent("由于CSP-S成绩未达到二等奖及以上", "WC", 30);
+      showSkipContestEvent("由于一模成绩未达到二等奖及以上", "WC", 30);
     } else {
       logEvent("WC比赛即将开始...", 'event');
       currentPhase = 30;
@@ -2670,10 +2670,10 @@ function handlePhaseTransition() {
     totalTrainingEvents = 5;
     startTrainingEvents();
   } else if (currentPhase === 31) {
-    logEvent("省选Day1比赛即将开始...", 'event');
+    logEvent("三模Day1比赛即将开始...", 'event');
     currentPhase = 32;
     playerStats.isProvincialTeam = false;
-    startContest("省选Day1");
+    startContest("三模Day1");
   } else if (currentPhase === 32) {
     logEvent("第十五次训练开始...", 'event');
     currentPhase = 33;
@@ -2681,13 +2681,13 @@ function handlePhaseTransition() {
     totalTrainingEvents = 2;
     startTrainingEvents();
   } else if (currentPhase === 33) {
-    logEvent("省选Day2比赛即将开始...", 'event');
+    logEvent("三模Day2比赛即将开始...", 'event');
     currentPhase = 34;
-    startContest("省选Day2");
+    startContest("三模Day2");
   } else if (currentPhase === 34) {
     if (!playerStats.isProvincialTeam && !playerStats.isNationalTeam) {
       logEvent("由于未能进入省队，你的OI生涯就此结束", 'event');
-      showGameOver("在高二省选中未能进入省队");
+      showGameOver("在高二三模中未能进入省队");
     } else {
       logEvent("第十六次训练开始...", 'event');
       currentPhase = 35;
@@ -2706,10 +2706,10 @@ function handlePhaseTransition() {
     totalTrainingEvents = 5;
     startTrainingEvents();
   } else if (currentPhase === 38) {
-    logEvent("NOI Day1比赛即将开始...", 'event');
+    logEvent("中考 Day1比赛即将开始...", 'event');
     currentPhase = 39;
     playerStats.isTrainingTeam = false;
-    startContest("NOI Day1");
+    startContest("中考 Day1");
   } else if (currentPhase === 39) {
     logEvent("第十八次训练开始...", 'event');
     currentPhase = 40;
@@ -2717,9 +2717,9 @@ function handlePhaseTransition() {
     totalTrainingEvents = 2;
     startTrainingEvents();
   } else if (currentPhase === 40) {
-    logEvent("NOI Day2比赛即将开始...", 'event');
+    logEvent("中考 Day2比赛即将开始...", 'event');
     currentPhase = 41;
-    startContest("NOI Day2");
+    startContest("中考 Day2");
   } else if (currentPhase === 41) {
     if (playerStats.isNationalTeam) {
       logEvent("第十九次训练开始...", 'event');
@@ -2734,7 +2734,7 @@ function handlePhaseTransition() {
       totalTrainingEvents = 1;
       startTrainingEvents();
     } else {
-      showGameOver("完成NOI比赛");
+      showGameOver("完成中考比赛");
     }
   } else if (currentPhase === 42) {
     logEvent("IOI Day1比赛即将开始...", 'event');
@@ -2871,20 +2871,20 @@ function calculateAward(contestType, score, prevScore = 0, prevScore2 = 0, prevS
 
   let award = "";
   switch (contestType) {
-    case "CSP-S":
+    case "一模":
       if (score >= 270 * difficultyMultiplier) award = "一等奖";
       else if (score >= 180 * difficultyMultiplier) award = "二等奖";
       else if (score >= 50 * difficultyMultiplier) award = "三等奖";
-      else award = "没有获奖";
-      playerStats.achievements.push(`CSP-S：${score}分，${award}`);
+      else award = "进厂";
+      playerStats.achievements.push(`一模：${score}分，${award}`);
       return award;
 
-    case "NOIP":
+    case "二模":
       if (score >= 270 * difficultyMultiplier) award = "一等奖";
       else if (score >= 180 * difficultyMultiplier) award = "二等奖";
       else if (score >= 50 * difficultyMultiplier) award = "三等奖";
-      else award = "没有获奖";
-      playerStats.achievements.push(`NOIP：${score}分，${award}`);
+      else award = "进厂";
+      playerStats.achievements.push(`二模：${score}分，${award}`);
       return award;
 
     case "WC":
@@ -2896,7 +2896,7 @@ function calculateAward(contestType, score, prevScore = 0, prevScore2 = 0, prevS
       playerStats.achievements.push(`${contestType}：${score}分，${award}`);
       return award;
 
-    case "省选":
+    case "三模":
       let totalScore = playerStats.tempScore;
       if (totalScore >= 700 * difficultyMultiplier) {
         award = "省队A队";
@@ -2904,12 +2904,12 @@ function calculateAward(contestType, score, prevScore = 0, prevScore2 = 0, prevS
       } else if (totalScore >= 600 * difficultyMultiplier) {
         award = "省队B队";
       } else {
-        award = "没有进队";
+        award = "进厂";
       }
-      playerStats.achievements.push(`省选：${totalScore}分，${award}`);
+      playerStats.achievements.push(`三模：${totalScore}分，${award}`);
       return award;
 
-    case "NOI":
+    case "中考":
       let noiScore = playerStats.tempScore;
       if (noiScore >= 400 * difficultyMultiplier) {
         award = "金牌";
@@ -2917,7 +2917,7 @@ function calculateAward(contestType, score, prevScore = 0, prevScore2 = 0, prevS
       } else if (noiScore >= 300 * difficultyMultiplier) award = "银牌";
       else if (noiScore >= 200 * difficultyMultiplier) award = "铜牌";
       else award = "铁牌";
-      playerStats.achievements.push(`NOI：${noiScore}分，${award}`);
+      playerStats.achievements.push(`中考：${noiScore}分，${award}`);
       return award;
 
     case "CTT":
@@ -3036,10 +3036,10 @@ function getUpdatedShopOptions() {
       description: `花费${currentShopPrices["思维提升"]}点决心提升1点思维能力`
     },
     {
-      text: "代码提升",
+      text: "过程提升",
       effects: { coding: 1 },
-      cost: currentShopPrices["代码提升"],
-      description: `花费${currentShopPrices["代码提升"]}点决心提升1点代码能力`
+      cost: currentShopPrices["过程提升"],
+      description: `花费${currentShopPrices["过程提升"]}点决心提升1点过程能力`
     },
     {
       text: "细心提升",
@@ -3173,7 +3173,7 @@ function startAdvancedMode(difficulty) {
   timePoints = 24;
   currentProblem = 1;
   totalProblems = 0;
-  currentContestName = "NOIP普及组";
+  currentContestName = "二模普及组";
 
   // 重置玩家属性
   playerStats = {
@@ -3212,7 +3212,7 @@ function getInitialShopPrices(difficulty) {
   const basePrices = {
     easy: {
       "思维提升": 200,
-      "代码提升": 200,
+      "过程提升": 200,
       "细心提升": 200,
       "随机提升": 200,
       "心态恢复": 300,
@@ -3222,7 +3222,7 @@ function getInitialShopPrices(difficulty) {
     },
     normal: {
       "思维提升": 300,
-      "代码提升": 300,
+      "过程提升": 300,
       "细心提升": 300,
       "随机提升": 300,
       "心态恢复": 300,
@@ -3232,7 +3232,7 @@ function getInitialShopPrices(difficulty) {
     },
     hard: {
       "思维提升": 300,
-      "代码提升": 300,
+      "过程提升": 300,
       "细心提升": 300,
       "随机提升": 300,
       "心态恢复": 500,
@@ -3242,7 +3242,7 @@ function getInitialShopPrices(difficulty) {
     },
     expert: {
       "思维提升": 500,
-      "代码提升": 500,
+      "过程提升": 500,
       "细心提升": 500,
       "随机提升": 500,
       "心态恢复": 500,
